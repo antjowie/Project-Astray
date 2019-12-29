@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ShipMovement : MonoBehaviour
+public class ShipController : MonoBehaviour
 {
     [SerializeField] private GameObject bulletPrefab = null;
 
