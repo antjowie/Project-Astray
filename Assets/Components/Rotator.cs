@@ -4,16 +4,28 @@ using UnityEngine;
 
 public class Rotator : MonoBehaviour
 {
-    [SerializeField] private float DeltaX = 90;
-    [SerializeField] private float DeltaY = 45;
-    [SerializeField] private float DeltaZ = 0;
+    [SerializeField] private bool randomizeRotation = false;
 
-    // Update is called once per frame
+    public float deltaX = 90;
+    public float deltaY = 45;
+    public float deltaZ = 0;
+
+    void Start()
+    {
+        if(randomizeRotation)
+        {
+            const float max = 180;
+            deltaX = Random.Range(0, max);
+            deltaY = Random.Range(0, max);
+            deltaZ = Random.Range(0, max);
+        }
+    }
+
     void Update()
     {
         transform.Rotate(
-            DeltaX * Time.deltaTime,
-            DeltaY * Time.deltaTime, 
-            DeltaZ * Time.deltaTime);
+            deltaX * Time.deltaTime,
+            deltaY * Time.deltaTime, 
+            deltaZ * Time.deltaTime);
     }
 }
