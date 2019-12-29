@@ -44,10 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7119a680e32034ba1941bbd0a590cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RandomizeRotation: 1
-  DeltaX: 90
-  DeltaY: 45
-  DeltaZ: 0
+  randomizeRotation: 1
+  deltaX: 90
+  deltaY: 45
+  deltaZ: 0
 --- !u!1 &7924801332513384389
 GameObject:
   m_ObjectHideFlags: 0

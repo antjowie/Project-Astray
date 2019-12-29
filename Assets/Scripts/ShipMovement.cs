@@ -2,14 +2,19 @@
 
 public class ShipMovement : MonoBehaviour
 {
+    [SerializeField] private GameObject bulletPrefab = null;
+
     [SerializeField] private float mouseXSensitivity = 1;
     [SerializeField] private float mouseYSensitivity = 1;
 
     [SerializeField] private float forwardSpeed = 50;
     [SerializeField] private float verticalSpeed = 25;
     [SerializeField] private float horizontalSpeed = 50;
-    
+
+    [SerializeField] private float shootCooldown = 0.1f;
+
     private Vector3 targetRotation;
+    private bool canShoot = true;
 
     private void Start()
     {
@@ -31,6 +36,21 @@ public class ShipMovement : MonoBehaviour
         // TEMP: Set rotation to player target rotation, this should happen overtime
         // and should roll the ship when the player 'flips' the ship
         transform.rotation = Quaternion.Euler(targetRotation);
+
+
+        // Shoot if player wants to 
+        if(Input.GetAxisRaw("fire") == 1 && canShoot)
+        {
+            Invoke("MakeShootable", shootCooldown);
+            canShoot = false;
+            // TODO: Use a weapon script and call shoot on that instead of instantiating ourselves
+            Instantiate(bulletPrefab, transform.position, transform.rotation);
+        }
+    }
+
+    private void MakeShootable()
+    {
+        canShoot = true;
     }
 
     private void FixedUpdate()

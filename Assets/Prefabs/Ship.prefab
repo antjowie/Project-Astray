@@ -185,7 +185,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6950425992062823170}
-  m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -206,5 +206,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9751e8d55a629ee4ea332ec7f8e93e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  horizontalSpeed: 50
-  verticalSpeed: 50
+  bulletPrefab: {fileID: 1602708506736910675, guid: a60d8d2176ee6b9438754a6fcc642ad4,
+    type: 3}
+  mouseXSensitivity: 0.25
+  mouseYSensitivity: 0.5
+  forwardSpeed: 25
+  verticalSpeed: 10
+  horizontalSpeed: 25
