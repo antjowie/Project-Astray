@@ -15,9 +15,11 @@ public class ShipMovement : MonoBehaviour
 
     private Vector3 targetRotation;
     private bool canShoot = true;
+    private Rigidbody rb;
 
     private void Start()
     {
+        rb = GetComponent<Rigidbody>();
         // Hold cursor
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -65,6 +67,6 @@ public class ShipMovement : MonoBehaviour
         // NOTE: This may have to be transformed with the target transform instead of actual transform
         movement = transform.rotation * movement;
 
-        transform.position += movement * Time.fixedDeltaTime;
+        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
     }
 }
