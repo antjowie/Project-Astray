@@ -17,7 +17,6 @@ public class LaserController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log(other.gameObject);
         if(other.gameObject.GetComponentInParent<Rotator>())
         {
             Destroy(gameObject);
