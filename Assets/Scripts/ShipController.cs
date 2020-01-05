@@ -45,13 +45,14 @@ public class ShipController : MonoBehaviour
             Input.GetAxis("mouseY") * mouseYSensitivity);
 
         // Update the target direction that the player want to face
-        // Pitch Yaw Roll        
-        targetRotation.x += -deltaMouse.y;
-        targetRotation.y += deltaMouse.x;
-        targetRotation.z += Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
-        
-        transform.rotation = Quaternion.Euler(targetRotation);
-        //targetRotation = transform.rotation.eulerAngles; // To make sure that the values stay in bounds
+        // Pitch Yaw Roll
+        Vector3 deltaRotation = new Vector3();
+
+        deltaRotation.x += -deltaMouse.y;
+        deltaRotation.y += deltaMouse.x;
+        deltaRotation.z += Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
+
+        transform.Rotate(deltaRotation, Space.Self);
     }
 
     private void UpdateShootState()
