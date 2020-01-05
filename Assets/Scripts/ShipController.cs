@@ -45,23 +45,11 @@ public class ShipController : MonoBehaviour
             Input.GetAxis("mouseY") * mouseYSensitivity);
 
         // Update the target direction that the player want to face
-        // Pitch Yaw Roll
-        Vector3 deltaRotation = new Vector3();
-
-        //deltaRotation.x += -Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
-        //deltaRotation.x += Time.deltaTime * rollSpeed;
-        deltaRotation.x = -deltaMouse.y;
-        deltaRotation.y = deltaMouse.x;
-        deltaRotation.z = Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
-        //deltaRotation = transform.rotation * deltaRotation;
-
-        //deltaRotation = transform.rotation * deltaRotation;
-        targetRotation += deltaRotation;
-
-        Debug.DrawRay(transform.position, Quaternion.Euler(targetRotation) * Vector3.forward * 10);
-
-        // TEMP: Set rotation to player target rotation, this should happen overtime
-        // and should roll the ship when the player 'flips' the ship
+        // Pitch Yaw Roll        
+        targetRotation.x += -deltaMouse.y;
+        targetRotation.y += deltaMouse.x;
+        targetRotation.z += Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
+        
         transform.rotation = Quaternion.Euler(targetRotation);
         //targetRotation = transform.rotation.eulerAngles; // To make sure that the values stay in bounds
     }
