@@ -11,9 +11,12 @@ public class ShipController : MonoBehaviour
     [SerializeField] private float verticalSpeed = 25;
     [SerializeField] private float horizontalSpeed = 50;
 
+    [SerializeField] private float rollSpeed = 360;
+    
     [SerializeField] private float shootCooldown = 0.1f;
 
     // We keep target rotation in Euler Angles so that we can easily modify it
+    [SerializeField]
     private Vector3 targetRotation;
     private bool canShoot = true;
     private Rigidbody rb;
@@ -27,30 +30,46 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
+        UpdateMovement();
+        UpdateShootState();
+
+        if (Input.GetKey(KeyCode.P))
+            targetRotation = Vector3.zero;
+    }
+
+    private void UpdateMovement()
+    {
         // We store the current delta mouse pos in a vector so we can easily use it
         Vector2 deltaMouse = new Vector2(
             Input.GetAxis("mouseX") * mouseXSensitivity,
             Input.GetAxis("mouseY") * mouseYSensitivity);
 
-        // When the ship is upside down, we should flip the yaw rotation
-        float yawInversion = 1f;
-        if (transform.up.y < 0f)
-            yawInversion = -1f;
-
-
         // Update the target direction that the player want to face
-        // Roll Yaw Pitch
-        //targetRotation.z = Mathf.Clamp(targetRotation.z + deltaMouse.y,-90,90);
-        targetRotation.z += deltaMouse.y;
-        targetRotation.y += deltaMouse.x * yawInversion;
+        // Pitch Yaw Roll
+        Vector3 deltaRotation = new Vector3();
+
+        //deltaRotation.x += -Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
+        //deltaRotation.x += Time.deltaTime * rollSpeed;
+        deltaRotation.x = -deltaMouse.y;
+        deltaRotation.y = deltaMouse.x;
+        deltaRotation.z = Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
+        //deltaRotation = transform.rotation * deltaRotation;
+
+        //deltaRotation = transform.rotation * deltaRotation;
+        targetRotation += deltaRotation;
+
+        Debug.DrawRay(transform.position, Quaternion.Euler(targetRotation) * Vector3.forward * 10);
 
         // TEMP: Set rotation to player target rotation, this should happen overtime
         // and should roll the ship when the player 'flips' the ship
         transform.rotation = Quaternion.Euler(targetRotation);
+        //targetRotation = transform.rotation.eulerAngles; // To make sure that the values stay in bounds
+    }
 
-
+    private void UpdateShootState()
+    {
         // Shoot if player wants to 
-        if(Input.GetAxisRaw("fire") == 1 && canShoot)
+        if (Input.GetAxisRaw("fire") == 1 && canShoot)
         {
             Invoke("MakeShootable", shootCooldown);
             canShoot = false;
@@ -58,7 +77,6 @@ public class ShipController : MonoBehaviour
             Instantiate(bulletPrefab, transform.position, transform.rotation);
         }
     }
-
     private void MakeShootable()
     {
         canShoot = true;
@@ -70,9 +88,10 @@ public class ShipController : MonoBehaviour
         Vector3 movement = new Vector3();
 
         // Update movement in local space and rotate with world rotation
-        movement.z = -horizontalSpeed * Input.GetAxis("horizontal");
-        movement.x = forwardSpeed * Input.GetAxis("forward");
+        movement.z = forwardSpeed * Input.GetAxis("forward"); 
+        movement.x = horizontalSpeed * Input.GetAxis("horizontal");
         movement.y = verticalSpeed * Input.GetAxis("vertical");
+        
         // NOTE: This may have to be transformed with the target transform instead of actual transform
         movement = transform.rotation * movement;
 

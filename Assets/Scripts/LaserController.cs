@@ -10,7 +10,7 @@ public class LaserController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         //rb.AddForce(transform.forward * speed);
-        rb.AddForce(transform.right * speed, ForceMode.VelocityChange);
+        rb.AddForce(transform.forward * speed, ForceMode.VelocityChange);
         //rb.velocity = transform.forward * speed;
         Destroy(gameObject, 2f);
     }
