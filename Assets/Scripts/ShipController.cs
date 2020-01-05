@@ -13,6 +13,7 @@ public class ShipController : MonoBehaviour
 
     [SerializeField] private float shootCooldown = 0.1f;
 
+    // We keep target rotation in Euler Angles so that we can easily modify it
     private Vector3 targetRotation;
     private bool canShoot = true;
     private Rigidbody rb;
@@ -26,14 +27,22 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
+        // We store the current delta mouse pos in a vector so we can easily use it
         Vector2 deltaMouse = new Vector2(
             Input.GetAxis("mouseX") * mouseXSensitivity,
             Input.GetAxis("mouseY") * mouseYSensitivity);
 
+        // When the ship is upside down, we should flip the yaw rotation
+        float yawInversion = 1f;
+        if (transform.up.y < 0f)
+            yawInversion = -1f;
+
+
         // Update the target direction that the player want to face
         // Roll Yaw Pitch
-        targetRotation.z = Mathf.Clamp(targetRotation.z + deltaMouse.y,-90,90);
-        targetRotation.y += deltaMouse.x;
+        //targetRotation.z = Mathf.Clamp(targetRotation.z + deltaMouse.y,-90,90);
+        targetRotation.z += deltaMouse.y;
+        targetRotation.y += deltaMouse.x * yawInversion;
 
         // TEMP: Set rotation to player target rotation, this should happen overtime
         // and should roll the ship when the player 'flips' the ship
