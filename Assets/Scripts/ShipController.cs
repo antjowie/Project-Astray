@@ -54,13 +54,6 @@ public class ShipController : MonoBehaviour
         targetRotation.y += deltaMouse.x;
         targetRotation.z += rollAmount;
 
-        // Apply rotation to local space and do it over time
-        var rotation = Vector3.SmoothDamp(Vector3.zero,targetRotation,ref rotationVelocity,rotationTime);
-        var nextRot = transform.rotation * Quaternion.Euler(rotation);
-        targetRotation -= rotation;
-
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, nextRot, rotationSpeed * Time.deltaTime);
-        
         // Some debug rays to show intended direction
         Debug.DrawRay(transform.position, transform.forward * 10);
         Debug.DrawRay(transform.position, transform.rotation * Quaternion.Euler(targetRotation) * Vector3.forward * 10, Color.green);
@@ -96,5 +89,12 @@ public class ShipController : MonoBehaviour
         movement = transform.rotation * movement;
 
         rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+
+        // Apply rotation to local space and do it over time
+        var rotation = Vector3.SmoothDamp(Vector3.zero, targetRotation, ref rotationVelocity, rotationTime,float.MaxValue,Time.fixedDeltaTime);
+        var nextRot = transform.rotation * Quaternion.Euler(rotation);
+        targetRotation -= rotation;
+
+        rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, nextRot, rotationSpeed * Time.fixedDeltaTime));
     }
 }
