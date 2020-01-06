@@ -631,6 +631,37 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
+        type: 3}
+      propertyPath: rotationTime
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
+        type: 3}
+      propertyPath: bulletPrefab
+      value: 
+      objectReference: {fileID: 1602708506736910675, guid: a60d8d2176ee6b9438754a6fcc642ad4,
+        type: 3}
+    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
+        type: 3}
+      propertyPath: rotationSpeed
+      value: 720
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
+        type: 3}
+      propertyPath: mouseXSensitivity
+      value: 0.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
+        type: 3}
+      propertyPath: mouseYSensitivity
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
+        type: 3}
+      propertyPath: rollSpeed
+      value: 270
+      objectReference: {fileID: 0}
     - target: {fileID: 6210330044378454289, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
         type: 3}
       propertyPath: m_LocalPosition.x

@@ -222,16 +222,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9751e8d55a629ee4ea332ec7f8e93e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletPrefab: {fileID: 1602708506736910675, guid: a60d8d2176ee6b9438754a6fcc642ad4,
-    type: 3}
   mouseXSensitivity: 0.25
   mouseYSensitivity: 0.5
-  forwardSpeed: 25
-  verticalSpeed: 10
-  horizontalSpeed: 25
-  rollSpeed: 180
+  forwardSpeed: 50
+  verticalSpeed: 25
+  horizontalSpeed: 50
   shootCooldown: 0.1
-  targetRotation: {x: 0, y: 0, z: 0}
+  bulletPrefab: {fileID: 1602708506736910675, guid: a60d8d2176ee6b9438754a6fcc642ad4,
+    type: 3}
+  rotationTime: 0.01
+  rotationSpeed: 720
+  rollSpeed: 270
 --- !u!54 &7320727045950150907
 Rigidbody:
   m_ObjectHideFlags: 0
