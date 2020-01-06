@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public class ShipController : MonoBehaviour
     [SerializeField] private float forwardSpeed = 50f;
     [SerializeField] private float verticalSpeed = 25f;
     [SerializeField] private float horizontalSpeed = 50f;
-    
+    private Vector3 movement;
+
     // TEMP: This should be controlled via a weapon script
     [SerializeField] private float shootCooldown = 0.1f;
     [SerializeField] private GameObject bulletPrefab = null;
@@ -17,18 +19,16 @@ public class ShipController : MonoBehaviour
     // We interpolate over this transform
     private Vector3 targetRotation = Vector3.zero;
     private Vector3 rotationVelocity = Vector3.zero;
-    [SerializeField] private float rotationTime = 0.2f;
+    [SerializeField] private float rotationDamping = 0.2f;
     [SerializeField] private float rotationSpeed = 360f;
-    [SerializeField] private float rollSpeed = 360f;
+    [SerializeField] private float rollCap = 360f;
 
     private bool canShoot = true;
     private Rigidbody rb;
-    private Transform cameraTrans;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        cameraTrans = transform.Find("Camera").transform;
         
         // Hold cursor
         Cursor.lockState = CursorLockMode.Locked;
@@ -36,8 +36,18 @@ public class ShipController : MonoBehaviour
 
     void Update()
     {
+        UpdateMovement();
         UpdateRotation();
         UpdateShootState();
+    }
+
+    private void UpdateMovement()
+    {
+        // Update movement in local space and rotate with world rotation
+        movement += transform.forward * forwardSpeed * Input.GetAxis("forward");
+        movement += transform.right * horizontalSpeed * Input.GetAxis("horizontal");
+        movement += transform.up * verticalSpeed * Input.GetAxis("vertical");
+        movement *= Time.deltaTime;
     }
 
     private void UpdateRotation()
@@ -46,7 +56,7 @@ public class ShipController : MonoBehaviour
         Vector2 deltaMouse = new Vector2(
             Input.GetAxis("mouseX") * mouseXSensitivity,
             Input.GetAxis("mouseY") * mouseYSensitivity);
-        float rollAmount = Input.GetAxis("roll") * rollSpeed * Time.deltaTime;
+        float rollAmount = Input.GetAxis("roll") * rollCap * Time.deltaTime;
         
         // Update the target direction that the player want to face
         // Pitch Yaw Roll
@@ -77,24 +87,17 @@ public class ShipController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // Create a vector to track all movement that we want to do this frame
-        Vector3 movement = new Vector3();
-
-        // Update movement in local space and rotate with world rotation
-        movement.z = forwardSpeed * Input.GetAxis("forward"); 
-        movement.x = horizontalSpeed * Input.GetAxis("horizontal");
-        movement.y = verticalSpeed * Input.GetAxis("vertical");
-        
-        // NOTE: This may have to be transformed with the target transform instead of actual transform
-        movement = transform.rotation * movement;
-
-        rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
+        rb.MovePosition(rb.position + movement);
+        movement = Vector3.zero;
 
         // Apply rotation to local space and do it over time
-        var rotation = Vector3.SmoothDamp(Vector3.zero, targetRotation, ref rotationVelocity, rotationTime,float.MaxValue,Time.fixedDeltaTime);
-        var nextRot = transform.rotation * Quaternion.Euler(rotation);
+        Vector3 rotation = Vector3.SmoothDamp(Vector3.zero, targetRotation, ref rotationVelocity, rotationDamping, rotationSpeed, Time.fixedDeltaTime);
+        Quaternion nextRot = transform.rotation * Quaternion.Euler(rotation);
         targetRotation -= rotation;
 
-        rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, nextRot, rotationSpeed * Time.fixedDeltaTime));
+        Quaternion oldRot = rb.rotation;
+        rb.MoveRotation(Quaternion.RotateTowards(rb.rotation, nextRot, rotationSpeed * Time.fixedDeltaTime));
+        //targetRotation -= Quaternion.;
+
     }
 }
