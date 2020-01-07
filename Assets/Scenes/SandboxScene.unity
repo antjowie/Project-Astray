@@ -559,7 +559,7 @@ Camera:
   m_FOVAxisMode: 0
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
-  m_FocalLength: 50
+  m_FocalLength: 32.96973
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
@@ -568,7 +568,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 40
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -593,7 +593,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 951684249}
-  m_LocalRotation: {x: 0.049813703, y: 0.0000000021485502, z: -1.1561033e-10, w: 0.99875855}
+  m_LocalRotation: {x: 0.0498137, y: -0.0000000021477051, z: 9.866807e-11, w: 0.99875855}
   m_LocalPosition: {x: 0, y: 2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -772,6 +772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769782869}
   - component: {fileID: 1769782868}
+  - component: {fileID: 1769782870}
   m_Layer: 0
   m_Name: CM tracking camera
   m_TagString: Untagged
@@ -800,7 +801,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 320212484}
   m_Follow: {fileID: 320212484}
   m_Lens:
-    FieldOfView: 40
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -821,7 +822,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1769782867}
-  m_LocalRotation: {x: 0.049813703, y: 0.0000000021485502, z: -1.1561033e-10, w: 0.99875855}
+  m_LocalRotation: {x: 0.0498137, y: -0.0000000021477051, z: 9.866807e-11, w: 0.99875855}
   m_LocalPosition: {x: 0, y: 2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -829,6 +830,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1769782870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769782867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6190c64b561bb5a4495c7e3596463f74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerTransform: {fileID: 320212484}
+  speedThreshold: 50
+  speedProgression: 10
+  minFOV: 60
+  maxFOV: 90
 --- !u!1001 &2041886287
 PrefabInstance:
   m_ObjectHideFlags: 0
