@@ -3,25 +3,29 @@ using UnityEngine;
 
 public class ShipController : MonoBehaviour
 {
+    [Header("Sensitivity")]
     [SerializeField] private float mouseXSensitivity = 0.25f;
     [SerializeField] private float mouseYSensitivity = 0.5f;
 
     // All speed values are in seconds. For example, 50 pixels in a second
+    [Header("Speed")]
     [SerializeField] private float forwardSpeed = 50f;
     [SerializeField] private float verticalSpeed = 25f;
     [SerializeField] private float horizontalSpeed = 50f;
     private Vector3 movement;
 
-    // TEMP: This should be controlled via a weapon script
-    [SerializeField] private float shootCooldown = 0.1f;
-    [SerializeField] private GameObject bulletPrefab = null;
-
     // We interpolate over this transform
-    private Vector3 targetRotation = Vector3.zero;
-    private Vector3 rotationVelocity = Vector3.zero;
+    [Header("Rotation")]
     [SerializeField] private float rotationDamping = 0.2f;
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float rollCap = 360f;
+    private Vector3 targetRotation = Vector3.zero;
+    private Vector3 rotationVelocity = Vector3.zero;
+
+    // TEMP: This should be controlled via a weapon script
+    [Header("Temp")]
+    [SerializeField] private float shootCooldown = 0.1f;
+    [SerializeField] private GameObject bulletPrefab = null;
 
     private bool canShoot = true;
     private Rigidbody rb;
