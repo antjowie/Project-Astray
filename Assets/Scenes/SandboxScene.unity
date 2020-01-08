@@ -829,7 +829,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 320212484}
   speedThreshold: 0.1
-  FOVChangeTime: 1
+  FOVIncreaseRate: 1
+  FOVDecreaseRate: 0.5
   minFOV: 60
   maxFOV: 70
 --- !u!1001 &2041886287
