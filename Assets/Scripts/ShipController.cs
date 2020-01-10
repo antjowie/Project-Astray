@@ -21,12 +21,6 @@ public class ShipController : MonoBehaviour
     private Vector3 targetRotation = Vector3.zero;
     private Vector3 rotationVelocity = Vector3.zero;
 
-    // TEMP: This should be controlled via a weapon script
-    [Header("Temp")]
-    [SerializeField] private float shootCooldown = 0.1f;
-    [SerializeField] private GameObject bulletPrefab = null;
-
-    private bool canShoot = true;
     private Rigidbody rb;
 
     private void Start()
@@ -81,17 +75,11 @@ public class ShipController : MonoBehaviour
     private void UpdateShootState()
     {
         // Shoot if player wants to 
-        if (Input.GetAxisRaw("fire") == 1 && canShoot)
+        if (Input.GetAxisRaw("fire") == 1)
         {
-            Invoke("MakeShootable", shootCooldown);
-            canShoot = false;
-            // TODO: Use a weapon script and call shoot on that instead of instantiating ourselves
-            Instantiate(bulletPrefab, transform.position, transform.rotation);
+            // Should be an interface
+            transform.Find("Weapon").GetComponent<AutomaticWeapon>().Shoot();
         }
-    }
-    private void MakeShootable()
-    {
-        canShoot = true;
     }
 
     private void FixedUpdate()
