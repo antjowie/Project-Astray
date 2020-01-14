@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipController : MonoBehaviour
@@ -8,25 +8,35 @@ public class ShipController : MonoBehaviour
     [SerializeField] private float mouseYSensitivity = 0.5f;
 
     // All speed values are in seconds. For example, 50 pixels in a second
-    [Header("Speed")]
+    [Header("Movement speed")]
     [SerializeField] private float forwardSpeed = 50f;
     [SerializeField] private float verticalSpeed = 25f;
     [SerializeField] private float horizontalSpeed = 50f;
     
     // We interpolate over this transform
-    [Header("Rotation")]
+    [Header("Movement rotation")]
     [SerializeField] private float rotationDamping = 0.2f;
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float rollCap = 360f;
     private Vector3 targetRotation = Vector3.zero;
     private Vector3 rotationVelocity = Vector3.zero;
 
+    [Header("Weapons")]
+    [SerializeField] private List<WeaponInterface> initialWeapons;
+
+    private List<WeaponInterface> weapons = new List<WeaponInterface>();
+
     private Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+
+        foreach (var weapon in initialWeapons)
+        {
+            weapons.Add(Instantiate(weapon,transform));
+        }
+
         // Hold cursor
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -74,11 +84,19 @@ public class ShipController : MonoBehaviour
     
     private void UpdateShootState()
     {
-        // Shoot if player wants to 
-        if (Input.GetAxisRaw("fire") == 1)
+        foreach (var weapon in weapons)
         {
-            // Should be an interface
-            transform.Find("Weapon").GetComponent<AutomaticWeapon>().Shoot();
+            // You can't get the key of an Axis. Should prob use the new input system
+            //if (Input.GetKeyDown("fire")) { transform.GetComponentInChildren<WeaponInterface>().OnPress(); }
+            //if (Input.GetKey    ("fire")) { transform.GetComponentInChildren<WeaponInterface>().OnHold(); }
+            //if (Input.GetKeyUp  ("fire")) { transform.GetComponentInChildren<WeaponInterface>().OnRelease(); }
+
+
+            // TODO: Add other states
+            if (Input.GetAxisRaw("fire") == 1) 
+            { 
+                weapon.OnHold(); 
+            }
         }
     }
 
