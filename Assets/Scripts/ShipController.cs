@@ -34,7 +34,7 @@ public class ShipController : MonoBehaviour
 
         foreach (var weapon in initialWeapons)
         {
-            weapons.Add(Instantiate(weapon,transform));
+            weapons.Add(Instantiate(weapon));
         }
 
         // Hold cursor
@@ -81,22 +81,26 @@ public class ShipController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * 10);
         Debug.DrawRay(transform.position, transform.rotation * Quaternion.Euler(targetRotation) * Vector3.forward * 10, Color.green);
     }
-    
+
+    // Roll own solution in future
+    private bool firePressed = false;
     private void UpdateShootState()
     {
+        bool isPressed = Input.GetAxisRaw("fire") == 1;
+
+        bool onPress = false;
+        bool onHold = false;
+        bool onRelease = false;
+
+        if (isPressed && !firePressed) { firePressed = true; onPress = true; }
+        if (isPressed && onPress) { onHold = true; }
+        if (!isPressed && firePressed) { firePressed = false; onRelease = true; }
+
         foreach (var weapon in weapons)
         {
-            // You can't get the key of an Axis. Should prob use the new input system
-            //if (Input.GetKeyDown("fire")) { transform.GetComponentInChildren<WeaponInterface>().OnPress(); }
-            //if (Input.GetKey    ("fire")) { transform.GetComponentInChildren<WeaponInterface>().OnHold(); }
-            //if (Input.GetKeyUp  ("fire")) { transform.GetComponentInChildren<WeaponInterface>().OnRelease(); }
-
-
-            // TODO: Add other states
-            if (Input.GetAxisRaw("fire") == 1) 
-            { 
-                weapon.OnHold(); 
-            }
+            if (onPress)    { weapon.OnPress(); }
+            if (onHold)     { weapon.OnHold(); }
+            if (onRelease)  { weapon.OnRelease(); }
         }
     }
 
