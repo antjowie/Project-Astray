@@ -32,9 +32,11 @@ public class ShipController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
-        foreach (var weapon in initialWeapons)
+        foreach (var prefab in initialWeapons)
         {
-            weapons.Add(Instantiate(weapon));
+            var weapon = Instantiate(prefab, transform);
+
+            weapons.Add(weapon);
         }
 
         // Hold cursor
@@ -93,7 +95,7 @@ public class ShipController : MonoBehaviour
         bool onRelease = false;
 
         if (isPressed && !firePressed) { firePressed = true; onPress = true; }
-        if (isPressed && onPress) { onHold = true; }
+        if (isPressed)                 { onHold = true; }
         if (!isPressed && firePressed) { firePressed = false; onRelease = true; }
 
         foreach (var weapon in weapons)

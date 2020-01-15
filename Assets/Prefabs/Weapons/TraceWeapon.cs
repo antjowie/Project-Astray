@@ -4,6 +4,7 @@ public class TraceWeapon : WeaponInterface
 {
     [SerializeField] private GameObject traceProjectile;
     [SerializeField] private float chargeTime = 0f;
+    [SerializeField] private float maxDistance = 10f;
 
     public void Start()
     {
@@ -20,9 +21,14 @@ public class TraceWeapon : WeaponInterface
     {
         if (traceProjectile.activeInHierarchy)
         {
-            Physics.Raycast(transform.position, transform.forward, out RaycastHit hit);
+            int mask = ~LayerMask.NameToLayer("Player"); // If we add enemies this has to be changed
             var scale = traceProjectile.transform.localScale;
-            scale.z = 10;//hit.distance;
+            bool isHit = Physics.Raycast(transform.position, transform.forward, out RaycastHit hit, maxDistance, mask, QueryTriggerInteraction.Collide);
+            
+            // Set correct scale
+            if (isHit) { scale.z = hit.distance * 0.5f; }
+            else       { scale.z = maxDistance * 0.5f; }
+
             traceProjectile.transform.localScale = scale;
         }
     }
