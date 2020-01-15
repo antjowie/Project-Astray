@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class ShipController : MonoBehaviour
@@ -8,31 +8,40 @@ public class ShipController : MonoBehaviour
     [SerializeField] private float mouseYSensitivity = 0.5f;
 
     // All speed values are in seconds. For example, 50 pixels in a second
-    [Header("Speed")]
+    [Header("Movement speed")]
     [SerializeField] private float forwardSpeed = 50f;
     [SerializeField] private float verticalSpeed = 25f;
     [SerializeField] private float horizontalSpeed = 50f;
     
     // We interpolate over this transform
-    [Header("Rotation")]
+    [Header("Movement rotation")]
     [SerializeField] private float rotationDamping = 0.2f;
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float rollCap = 360f;
     private Vector3 targetRotation = Vector3.zero;
     private Vector3 rotationVelocity = Vector3.zero;
 
-    // TEMP: This should be controlled via a weapon script
-    [Header("Temp")]
-    [SerializeField] private float shootCooldown = 0.1f;
-    [SerializeField] private GameObject bulletPrefab = null;
+    [Header("Weapons")]
+    [SerializeField] private List<WeaponInterface> initialWeapons;
 
-    private bool canShoot = true;
+    private List<WeaponInterface> weapons = new List<WeaponInterface>();
+
     private Rigidbody rb;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+
+        int i = 0;
+        foreach (var prefab in initialWeapons)
+        {
+            var weapon = Instantiate(prefab, transform.Find($"Weapon ({i})"));
+            weapon.gameObject.layer = LayerMask.NameToLayer("Player");
+
+            weapons.Add(weapon);
+            i++;
+        }
+
         // Hold cursor
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -77,21 +86,27 @@ public class ShipController : MonoBehaviour
         Debug.DrawRay(transform.position, transform.forward * 10);
         Debug.DrawRay(transform.position, transform.rotation * Quaternion.Euler(targetRotation) * Vector3.forward * 10, Color.green);
     }
-    
+
+    // Roll own solution in future
+    private bool firePressed = false;
     private void UpdateShootState()
     {
-        // Shoot if player wants to 
-        if (Input.GetAxisRaw("fire") == 1 && canShoot)
+        bool isPressed = Input.GetAxisRaw("fire") == 1;
+
+        bool onPress = false;
+        bool onHold = false;
+        bool onRelease = false;
+
+        if (isPressed && !firePressed) { firePressed = true; onPress = true; }
+        if (isPressed)                 { onHold = true; }
+        if (!isPressed && firePressed) { firePressed = false; onRelease = true; }
+
+        foreach (var weapon in weapons)
         {
-            Invoke("MakeShootable", shootCooldown);
-            canShoot = false;
-            // TODO: Use a weapon script and call shoot on that instead of instantiating ourselves
-            Instantiate(bulletPrefab, transform.position, transform.rotation);
+            if (onPress)    { weapon.OnPress(); }
+            if (onHold)     { weapon.OnHold(); }
+            if (onRelease)  { weapon.OnRelease(); }
         }
-    }
-    private void MakeShootable()
-    {
-        canShoot = true;
     }
 
     private void FixedUpdate()

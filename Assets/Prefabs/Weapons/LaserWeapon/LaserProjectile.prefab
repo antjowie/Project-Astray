@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3332213531257821000}
   - component: {fileID: 4163051517866909687}
   - component: {fileID: 2723715113903551121}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,8 +103,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1766105295003794691}
   - component: {fileID: 8973651287780837520}
-  - component: {fileID: 3814104069115801537}
-  m_Layer: 0
+  - component: {fileID: 6517579788925418160}
+  - component: {fileID: 3452789141967403078}
+  m_Layer: 11
   m_Name: Laser
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -142,7 +143,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3814104069115801537
+--- !u!114 &6517579788925418160
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -151,7 +152,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1602708506736910675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c576818a5a7916408b9e2819b7e85db, type: 3}
+  m_Script: {fileID: 11500000, guid: e361ae34691c4f248818567ed810bbc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 50
+  force: 50
+--- !u!114 &3452789141967403078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1602708506736910675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1909a5b28504864b936f68890eda288, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnOnDestruct: {fileID: 0}
+  timeTillDestroy: 5

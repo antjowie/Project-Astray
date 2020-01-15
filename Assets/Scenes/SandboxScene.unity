@@ -979,31 +979,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Ship
       objectReference: {fileID: 0}
-    - target: {fileID: 7320727045950150907, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: m_Interpolate
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7320727045950150907, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: m_AngularDrag
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7320727045950150907, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: m_Mass
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7320727045950150907, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: m_Drag
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 7320727045950150907, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: m_IsKinematic
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3, type: 3}
 --- !u!1001 &5681057193233675622
