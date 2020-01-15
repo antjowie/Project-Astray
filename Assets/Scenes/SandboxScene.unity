@@ -553,7 +553,7 @@ Camera:
     height: 1
   near clip plane: 0.1
   far clip plane: 5000
-  field of view: 60.60751
+  field of view: 60
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -786,7 +786,7 @@ MonoBehaviour:
   m_LookAt: {fileID: 320212484}
   m_Follow: {fileID: 320212484}
   m_Lens:
-    FieldOfView: 60.60751
+    FieldOfView: 60
     OrthographicSize: 10
     NearClipPlane: 0.1
     FarClipPlane: 5000
@@ -919,17 +919,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: initialWeapons.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1393075232465793544, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
-        type: 3}
-      propertyPath: initialWeapons.Array.data[0]
-      value: 
-      objectReference: {fileID: 1621066979982594863, guid: e5a3501e57fab2549bd8398679ebd651,
-        type: 3}
     - target: {fileID: 6210330044378454289, guid: 2ba01c896c8ac2a4ea4dff17c1d3f6d3,
         type: 3}
       propertyPath: m_LocalPosition.x

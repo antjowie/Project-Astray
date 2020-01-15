@@ -32,11 +32,14 @@ public class ShipController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
 
+        int i = 0;
         foreach (var prefab in initialWeapons)
         {
-            var weapon = Instantiate(prefab, transform);
+            var weapon = Instantiate(prefab, transform.Find($"Weapon ({i})"));
+            weapon.gameObject.layer = LayerMask.NameToLayer("Player");
 
             weapons.Add(weapon);
+            i++;
         }
 
         // Hold cursor
