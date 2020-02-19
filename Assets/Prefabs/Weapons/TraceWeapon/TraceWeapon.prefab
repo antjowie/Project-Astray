@@ -46,3 +46,4 @@ MonoBehaviour:
   traceProjectile: {fileID: 4428901371034502345, guid: 4994d32f535a5dd468817c652be5d6b5,
     type: 3}
   chargeTime: 0.5
+  maxDistance: 100
